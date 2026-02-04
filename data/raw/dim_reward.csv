@@ -1,0 +1,4 @@
+reward_id,partner,reward_type,reward_tier,points_cost
+1,Spotify Africa,music_subscription_discount,Silver,150
+2,Spotify Africa,premium_trial,Gold,300
+3,Spotify Africa,playlist_challenge_bonus,Gold,100
