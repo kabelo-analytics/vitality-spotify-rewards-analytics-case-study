@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vitality × Spotify Rewards — Product Analytics Case Study</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      border-bottom: 3px solid #2563eb;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.85rem;
+      border-radius: 2rem;
+      border: 1px solid #bfdbfe;
+      margin-bottom: 1rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: #0f172a;
+      max-width: 800px;
+      margin: 0 auto 0.75rem;
+      line-height: 1.25;
+    }
+
+    .header-meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .meta-pill {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 2rem;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    /* Layout */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* Section card */
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #2563eb;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid #eff6ff;
+    }
+
+    .card p {
+      color: #334155;
+      margin-bottom: 0.85rem;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    /* Key questions list */
+    .questions {
+      list-style: none;
+      padding: 0;
+      margin: 0.75rem 0 0;
+    }
+
+    .questions li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+
+    .questions li:last-child { border-bottom: none; }
+
+    .q-dot {
+      width: 8px;
+      height: 8px;
+      background: #2563eb;
+      border-radius: 50%;
+      margin-top: 0.42rem;
+      flex-shrink: 0;
+    }
+
+    /* Two-column schema */
+    .schema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 580px) {
+      .schema-grid { grid-template-columns: 1fr; }
+    }
+
+    .schema-group h3 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #64748b;
+      margin-bottom: 0.6rem;
+    }
+
+    .schema-group ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .schema-group ul li {
+      font-size: 0.88rem;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 0.35rem 0.65rem;
+      margin-bottom: 0.4rem;
+      color: #1e40af;
+    }
+
+    /* Findings cards */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 580px) {
+      .findings-grid { grid-template-columns: 1fr; }
+    }
+
+    .finding-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #2563eb;
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+    }
+
+    .finding-item.warning {
+      border-left-color: #f59e0b;
+    }
+
+    .finding-item p {
+      font-size: 0.9rem;
+      color: #334155;
+      margin: 0;
+    }
+
+    /* Stack tags */
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .stack-tag {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      border-radius: 2rem;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    /* Implication box */
+    .implication-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .implication-box p {
+      color: #1e40af;
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .implication-box p:last-child { margin-bottom: 0; }
+
+    /* Footer */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    footer .footer-links a {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .card { padding: 1.4rem 1.2rem; }
+      header { padding: 2rem 1.2rem 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Case Study</div>
+    <h1>Vitality &times; Spotify Rewards<br>Product Analytics Case Study</h1>
+    <div class="header-meta">
+      <span class="meta-pill">Product Analytics</span>
+      <span class="meta-pill">Rewards &amp; Retention</span>
+      <span class="meta-pill">Python &middot; Power BI</span>
+      <span class="meta-pill">12-Week Pilot Design</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Section 1: The Partnership Question -->
+    <div class="card">
+      <h2>The Partnership Question</h2>
+      <p>
+        Rewards programmes that integrate third-party lifestyle products face a core measurement challenge —
+        do rewards change behaviour, or do they attract members who were already active?
+      </p>
+      <p>
+        This case study models a hypothetical opt-in partnership between a Vitality-style wellness rewards
+        programme and Spotify Africa, building the analytics layer to evaluate whether music engagement
+        incentives drive measurable improvements in physical activity and member retention.
+      </p>
+    </div>
+
+    <!-- Section 2: What Was Measured -->
+    <div class="card">
+      <h2>What Was Measured</h2>
+      <p>
+        The pilot spans 12 weeks — four weeks pre and eight weeks post reward activation —
+        structured to measure directional change at the member cohort level.
+      </p>
+      <ul class="questions">
+        <li><span class="q-dot"></span>Did Spotify engagement increase after reward activation?</li>
+        <li><span class="q-dot"></span>Did physical activity improve among reward-engaged members?</li>
+        <li><span class="q-dot"></span>What was the retention delta between engaged and non-engaged cohorts?</li>
+        <li><span class="q-dot"></span>Were there selection bias risks that needed to be controlled?</li>
+      </ul>
+    </div>
+
+    <!-- Section 3: Data Model -->
+    <div class="card">
+      <h2>Data Model</h2>
+      <p>Warehouse-style star schema designed for Power BI with clearly separated dimension and fact layers.</p>
+      <div class="schema-grid">
+        <div class="schema-group">
+          <h3>Dimensions</h3>
+          <ul>
+            <li>dim_member</li>
+            <li>dim_week</li>
+            <li>dim_month</li>
+            <li>dim_reward</li>
+            <li>dim_content_category</li>
+          </ul>
+        </div>
+        <div class="schema-group">
+          <h3>Facts</h3>
+          <ul>
+            <li>fact_activity_weekly</li>
+            <li>fact_spotify_weekly</li>
+            <li>fact_campaign_exposure</li>
+            <li>fact_reward_events</li>
+            <li>fact_retention_monthly</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:1rem; font-size:0.9rem; color:#64748b;">
+        Analysis-ready outputs: <code style="background:#f1f5f9;padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;">member_week_pilot.csv</code> and <code style="background:#f1f5f9;padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;">member_summary.csv</code>
+      </p>
+    </div>
+
+    <!-- Section 4: Analytical Framework -->
+    <div class="card">
+      <h2>Analytical Framework</h2>
+      <p>Pilot design with an opt-in reward cohort measured against a non-engaged control group across four measurement dimensions.</p>
+      <ul class="questions">
+        <li><span class="q-dot"></span><strong>Engagement metrics:</strong>&nbsp; Spotify streams pre vs post activation</li>
+        <li><span class="q-dot"></span><strong>Activity metrics:</strong>&nbsp; Weekly exercise events and activity score deltas</li>
+        <li><span class="q-dot"></span><strong>Retention metrics:</strong>&nbsp; Monthly cohort retention by engagement tier</li>
+        <li><span class="q-dot"></span><strong>Bias controls:</strong>&nbsp; Opt-in selection bias flagged; baseline equivalence tested</li>
+      </ul>
+    </div>
+
+    <!-- Section 5: Key Findings -->
+    <div class="card">
+      <h2>Key Findings</h2>
+      <div class="findings-grid">
+        <div class="finding-item">
+          <p>Reward-engaged members showed higher post-pilot activity scores relative to their own pre-pilot baseline.</p>
+        </div>
+        <div class="finding-item">
+          <p>Retention was notably higher in the engaged cohort at the 8-week mark compared to the control group.</p>
+        </div>
+        <div class="finding-item warning">
+          <p>Opt-in members were already more active at baseline — selection bias is a documented confounding factor.</p>
+        </div>
+        <div class="finding-item">
+          <p>The reward performs best as a retention tool for already-engaged members, not as an activation lever for inactive segments.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6: Product Implication -->
+    <div class="card">
+      <h2>Product Implication</h2>
+      <div class="implication-box">
+        <p>
+          A tiered reward structure targeting different engagement segments would sharpen impact and reduce
+          cost-per-active-member ratios.
+        </p>
+        <p>
+          Inactive segments require a different intervention — the music reward alone is unlikely to move
+          behavioural baselines for disengaged members.
+        </p>
+        <p>
+          A randomised controlled design in a future pilot would allow causal attribution rather than
+          directional correlation.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 7: Stack -->
+    <div class="card">
+      <h2>Stack</h2>
+      <div class="stack-tags">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">pandas</span>
+        <span class="stack-tag">numpy</span>
+        <span class="stack-tag">matplotlib</span>
+        <span class="stack-tag">seaborn</span>
+        <span class="stack-tag">Jupyter Notebooks</span>
+        <span class="stack-tag">Power BI</span>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="https://github.com/kabelo-analytics/vitality-spotify-rewards-analytics-case-study" target="_blank" rel="noopener">GitHub Repository</a>
+      <a href="https://km-webdvlpr.github.io/III.IV/projects/" target="_blank" rel="noopener">Portfolio</a>
+    </div>
+    <p>Vitality &times; Spotify Rewards &mdash; Product Analytics Case Study &middot; kabelo-analytics</p>
+  </footer>
+
+</body>
+</html>
