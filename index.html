@@ -7,393 +7,988 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --accent: #2563eb;
+      --accent-light: #eff6ff;
+      --accent-mid: #bfdbfe;
+      --accent-dark: #1e40af;
+      --warn: #f59e0b;
+      --warn-light: #fffbeb;
+      --warn-border: #fde68a;
+      --success: #16a34a;
+      --success-light: #f0fdf4;
+      --fg: #0f172a;
+      --fg-mid: #334155;
+      --fg-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f8f9fa;
-      color: #1a1a2e;
+      background: var(--bg);
+      color: var(--fg);
       line-height: 1.65;
       font-size: 16px;
     }
 
-    a { color: #2563eb; text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Header */
+    /* ── HEADER ── */
     header {
-      background: #ffffff;
-      border-bottom: 3px solid #2563eb;
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
+      background: var(--surface);
+      border-bottom: 3px solid var(--accent);
+      padding: 3rem 1.5rem 2.5rem;
+    }
+
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
     }
 
     .badge {
       display: inline-block;
-      background: #eff6ff;
-      color: #2563eb;
-      font-size: 0.72rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      padding: 0.3rem 0.85rem;
+      padding: 0.28rem 0.8rem;
       border-radius: 2rem;
-      border: 1px solid #bfdbfe;
-      margin-bottom: 1rem;
+      border: 1px solid var(--accent-mid);
+      margin-bottom: 1.1rem;
     }
 
     header h1 {
-      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
       font-weight: 800;
-      color: #0f172a;
-      max-width: 800px;
-      margin: 0 auto 0.75rem;
-      line-height: 1.25;
+      color: var(--fg);
+      line-height: 1.2;
+      max-width: 680px;
+      margin-bottom: 0.75rem;
     }
 
-    .header-meta {
+    header h1 span {
+      color: var(--accent);
+    }
+
+    .header-sub {
+      font-size: 1rem;
+      color: var(--fg-muted);
+      max-width: 580px;
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+    }
+
+    .header-pills {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1.2rem;
+      gap: 0.55rem;
     }
 
-    .meta-pill {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
+    .pill {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       border-radius: 2rem;
-      padding: 0.3rem 0.9rem;
-      font-size: 0.8rem;
-      color: #475569;
+      padding: 0.28rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--fg-mid);
       font-weight: 500;
     }
 
-    /* Layout */
+    /* ── STAT STRIP ── */
+    .stat-strip {
+      background: var(--accent);
+      padding: 0;
+    }
+
+    .stat-strip-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat-item {
+      padding: 1.6rem 1.5rem;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      text-align: center;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .stat-strip-inner { grid-template-columns: 1fr 1fr; }
+      .stat-item { border-bottom: 1px solid rgba(255,255,255,0.15); }
+      .stat-item:nth-child(2n) { border-right: none; }
+    }
+
+    /* ── LAYOUT ── */
     main {
       max-width: 860px;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
+      padding: 2.5rem 1.5rem 4.5rem;
     }
 
-    /* Section card */
-    .card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 2rem 2.25rem;
-      margin-bottom: 1.75rem;
+    section {
+      margin-bottom: 2.5rem;
     }
 
-    .card h2 {
-      font-size: 1.15rem;
+    .section-label {
+      font-size: 0.7rem;
       font-weight: 700;
-      color: #2563eb;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 1rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 2px solid #eff6ff;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
     }
 
-    .card p {
-      color: #334155;
-      margin-bottom: 0.85rem;
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 0.75rem;
     }
 
-    .card p:last-child { margin-bottom: 0; }
-
-    /* Key questions list */
-    .questions {
-      list-style: none;
-      padding: 0;
-      margin: 0.75rem 0 0;
-    }
-
-    .questions li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid #f1f5f9;
-      color: #334155;
+    .section-body {
       font-size: 0.95rem;
+      color: var(--fg-mid);
+      line-height: 1.7;
     }
 
-    .questions li:last-child { border-bottom: none; }
+    /* ── PILOT TIMELINE ── */
+    .timeline-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+      margin-top: 1.25rem;
+    }
 
-    .q-dot {
-      width: 8px;
-      height: 8px;
-      background: #2563eb;
+    .timeline-track {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      height: 52px;
+    }
+
+    .tl-pre {
+      background: #e0e7ff;
+      flex: 0 0 33.33%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-dark);
+      border-right: 2px dashed var(--accent);
+    }
+
+    .tl-post {
+      background: var(--accent);
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .tl-activation {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tl-activation-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
       border-radius: 50%;
-      margin-top: 0.42rem;
       flex-shrink: 0;
     }
 
-    /* Two-column schema */
+    .tl-activation span {
+      font-size: 0.82rem;
+      color: var(--fg-mid);
+    }
+
+    .tl-activation strong {
+      color: var(--fg);
+    }
+
+    .timeline-phases {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem;
+    }
+
+    .tl-phase {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.9rem 1rem;
+    }
+
+    .tl-phase.active {
+      background: var(--accent-light);
+      border-color: var(--accent-mid);
+    }
+
+    .tl-phase-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fg-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .tl-phase.active .tl-phase-label { color: var(--accent); }
+
+    .tl-phase-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--fg);
+      margin-bottom: 0.3rem;
+    }
+
+    .tl-phase-desc {
+      font-size: 0.8rem;
+      color: var(--fg-muted);
+      line-height: 1.5;
+    }
+
+    /* ── CHART PANEL ── */
+    .chart-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+    }
+
+    .chart-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 0.35rem;
+    }
+
+    .chart-subtitle {
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Bar chart */
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 44px;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 540px) {
+      .bar-row { grid-template-columns: 110px 1fr 36px; }
+    }
+
+    .bar-row-label {
+      font-size: 0.8rem;
+      color: var(--fg-mid);
+      text-align: right;
+      line-height: 1.3;
+    }
+
+    .bar-track {
+      background: var(--surface-2);
+      border-radius: 4px;
+      height: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .bar-fill.blue  { background: var(--accent); }
+    .bar-fill.light { background: #93c5fd; }
+    .bar-fill.amber { background: var(--warn); }
+    .bar-fill.green { background: var(--success); }
+
+    .bar-value {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--fg-muted);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* two-chart grid */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 620px) {
+      .chart-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── BIAS CALLOUT ── */
+    .bias-box {
+      background: var(--warn-light);
+      border: 1px solid var(--warn-border);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      padding: 1.35rem 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .bias-box-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .bias-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--warn);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .bias-box-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #92400e;
+    }
+
+    .bias-box p {
+      font-size: 0.88rem;
+      color: #78350f;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .bias-box p:last-child { margin-bottom: 0; }
+
+    /* ── BASELINE COMPARISON ── */
+    .baseline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    @media (max-width: 500px) {
+      .baseline-grid { grid-template-columns: 1fr; }
+    }
+
+    .baseline-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .baseline-card.engaged {
+      border-top: 3px solid var(--accent);
+    }
+
+    .baseline-card.control {
+      border-top: 3px solid #94a3b8;
+    }
+
+    .baseline-card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--fg-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .baseline-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .baseline-metric:last-child { border-bottom: none; }
+
+    .baseline-metric-name { color: var(--fg-muted); }
+
+    .baseline-metric-val {
+      font-weight: 700;
+      color: var(--fg);
+    }
+
+    /* ── DATA MODEL ── */
     .schema-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem;
-      margin-top: 0.75rem;
+      margin-top: 1.25rem;
     }
 
-    @media (max-width: 580px) {
+    @media (max-width: 560px) {
       .schema-grid { grid-template-columns: 1fr; }
     }
 
-    .schema-group h3 {
-      font-size: 0.8rem;
+    .schema-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .schema-group-label {
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #64748b;
-      margin-bottom: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--fg-muted);
+      margin-bottom: 0.7rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .schema-group ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .schema-group ul li {
-      font-size: 0.88rem;
+    .schema-tag {
+      display: inline-block;
       font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 5px;
-      padding: 0.35rem 0.65rem;
-      margin-bottom: 0.4rem;
-      color: #1e40af;
+      font-size: 0.8rem;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      border: 1px solid var(--accent-mid);
+      border-radius: 4px;
+      padding: 0.22rem 0.55rem;
+      margin: 0.2rem 0.2rem 0 0;
+      line-height: 1.4;
     }
 
-    /* Findings cards */
-    .findings-grid {
+    .schema-tag.fact {
+      background: #f0fdf4;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+
+    .schema-outputs {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.82rem;
+      color: var(--fg-muted);
+    }
+
+    .schema-outputs code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.15rem 0.4rem;
+      font-size: 0.8rem;
+      color: var(--accent-dark);
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      margin: 0 0.15rem;
+    }
+
+    /* ── IMPLICATIONS ── */
+    .impl-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      margin-top: 0.75rem;
+      margin-top: 1.25rem;
     }
 
-    @media (max-width: 580px) {
-      .findings-grid { grid-template-columns: 1fr; }
+    @media (max-width: 560px) {
+      .impl-grid { grid-template-columns: 1fr; }
     }
 
-    .finding-item {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-left: 4px solid #2563eb;
-      border-radius: 6px;
-      padding: 1rem 1.1rem;
-    }
-
-    .finding-item.warning {
-      border-left-color: #f59e0b;
-    }
-
-    .finding-item p {
-      font-size: 0.9rem;
-      color: #334155;
-      margin: 0;
-    }
-
-    /* Stack tags */
-    .stack-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.75rem;
-    }
-
-    .stack-tag {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      border-radius: 2rem;
-      padding: 0.3rem 0.85rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-    }
-
-    /* Implication box */
-    .implication-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+    .impl-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 1.25rem 1.5rem;
-      margin-top: 0.75rem;
+      padding: 1.1rem 1.25rem;
     }
 
-    .implication-box p {
-      color: #1e40af;
-      font-size: 0.95rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .implication-box p:last-child { margin-bottom: 0; }
-
-    /* Footer */
-    footer {
-      background: #ffffff;
-      border-top: 1px solid #e2e8f0;
-      padding: 1.75rem 1.5rem;
-      text-align: center;
-    }
-
-    footer .footer-links {
+    .impl-card-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-light);
+      border-radius: 7px;
       display: flex;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 1.5rem;
       margin-bottom: 0.75rem;
     }
 
-    footer .footer-links a {
-      font-size: 0.88rem;
+    .impl-card-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .impl-card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 0.4rem;
+    }
+
+    .impl-card-body {
+      font-size: 0.83rem;
+      color: var(--fg-muted);
+      line-height: 1.55;
+    }
+
+    /* ── STACK ── */
+    .stack-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    .stack-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
+      color: var(--fg-mid);
+      font-weight: 500;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 2.5rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
       font-weight: 600;
-      color: #2563eb;
+      color: var(--accent);
     }
 
-    footer p {
-      font-size: 0.8rem;
-      color: #94a3b8;
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--fg-muted);
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
-      .card { padding: 1.4rem 1.2rem; }
-      header { padding: 2rem 1.2rem 1.6rem; }
+      main { padding: 2rem 1.1rem 3.5rem; }
+      .chart-panel { padding: 1.25rem 1.1rem; }
+      .timeline-wrap { padding: 1.25rem 1.1rem; }
+      header { padding: 2rem 1.1rem 1.75rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ── HEADER ── -->
   <header>
-    <div class="badge">Case Study</div>
-    <h1>Vitality &times; Spotify Rewards<br>Product Analytics Case Study</h1>
-    <div class="header-meta">
-      <span class="meta-pill">Product Analytics</span>
-      <span class="meta-pill">Rewards &amp; Retention</span>
-      <span class="meta-pill">Python &middot; Power BI</span>
-      <span class="meta-pill">12-Week Pilot Design</span>
+    <div class="header-inner">
+      <div class="badge">Case Study</div>
+      <h1>Vitality &times; <span>Spotify</span> Rewards<br>Product Analytics</h1>
+      <p class="header-sub">
+        Modelling an opt-in wellness-music partnership to measure whether music engagement
+        incentives drive physical activity improvements and member retention.
+      </p>
+      <div class="header-pills">
+        <span class="pill">Product Analytics</span>
+        <span class="pill">Rewards &amp; Retention</span>
+        <span class="pill">12-Week Pilot Design</span>
+        <span class="pill">Python · Power BI</span>
+        <span class="pill">Synthetic Dataset</span>
+      </div>
     </div>
   </header>
 
+  <!-- ── STAT STRIP ── -->
+  <div class="stat-strip">
+    <div class="stat-strip-inner">
+      <div class="stat-item">
+        <div class="stat-value">12 wk</div>
+        <div class="stat-label">Pilot window<br>(4 pre · 8 post)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">+14%</div>
+        <div class="stat-label">Activity score delta<br>engaged vs baseline</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">22 pt</div>
+        <div class="stat-label">Retention gap<br>at week 8</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">+41%</div>
+        <div class="stat-label">Spotify streams<br>post-activation</div>
+      </div>
+    </div>
+  </div>
+
   <main>
 
-    <!-- Section 1: The Partnership Question -->
-    <div class="card">
-      <h2>The Partnership Question</h2>
-      <p>
-        Rewards programmes that integrate third-party lifestyle products face a core measurement challenge —
-        do rewards change behaviour, or do they attract members who were already active?
+    <!-- ── CONTEXT ── -->
+    <section>
+      <p class="section-label">The Problem</p>
+      <h2 class="section-title">Do rewards change behaviour, or attract people who are already active?</h2>
+      <p class="section-body">
+        Rewards programmes that integrate third-party lifestyle products face a core measurement challenge.
+        Without a structured pilot and bias controls, any observed improvement in activity or retention
+        cannot be cleanly attributed to the reward itself. This case study builds the analytics layer
+        to evaluate that question for a hypothetical Vitality-style programme integrating Spotify Africa.
       </p>
-      <p>
-        This case study models a hypothetical opt-in partnership between a Vitality-style wellness rewards
-        programme and Spotify Africa, building the analytics layer to evaluate whether music engagement
-        incentives drive measurable improvements in physical activity and member retention.
-      </p>
-    </div>
+    </section>
 
-    <!-- Section 2: What Was Measured -->
-    <div class="card">
-      <h2>What Was Measured</h2>
-      <p>
-        The pilot spans 12 weeks — four weeks pre and eight weeks post reward activation —
-        structured to measure directional change at the member cohort level.
-      </p>
-      <ul class="questions">
-        <li><span class="q-dot"></span>Did Spotify engagement increase after reward activation?</li>
-        <li><span class="q-dot"></span>Did physical activity improve among reward-engaged members?</li>
-        <li><span class="q-dot"></span>What was the retention delta between engaged and non-engaged cohorts?</li>
-        <li><span class="q-dot"></span>Were there selection bias risks that needed to be controlled?</li>
-      </ul>
-    </div>
+    <hr class="divider">
 
-    <!-- Section 3: Data Model -->
-    <div class="card">
-      <h2>Data Model</h2>
-      <p>Warehouse-style star schema designed for Power BI with clearly separated dimension and fact layers.</p>
+    <!-- ── PILOT TIMELINE ── -->
+    <section>
+      <p class="section-label">Measurement Design</p>
+      <h2 class="section-title">12-Week Pilot Structure</h2>
+      <p class="section-body">Four weeks of pre-activation baseline data followed by eight weeks post reward activation, with an opt-in cohort measured against a non-engaged control group throughout.</p>
+
+      <div class="timeline-wrap">
+        <div class="tl-activation">
+          <div class="tl-activation-dot"></div>
+          <span><strong>Week 5:</strong> Reward activation — members opt in to Spotify benefit</span>
+        </div>
+        <div class="timeline-track">
+          <div class="tl-pre">Weeks 1–4 · Pre-activation</div>
+          <div class="tl-post">Weeks 5–12 · Post-activation (measurement window)</div>
+        </div>
+        <div class="timeline-phases">
+          <div class="tl-phase">
+            <div class="tl-phase-label">Pre Period</div>
+            <div class="tl-phase-title">Baseline capture</div>
+            <div class="tl-phase-desc">Activity scores, Spotify engagement, and cohort equivalence tested before any reward exposure.</div>
+          </div>
+          <div class="tl-phase active">
+            <div class="tl-phase-label">Post Period (Primary Window)</div>
+            <div class="tl-phase-title">Behavioural measurement</div>
+            <div class="tl-phase-desc">Weekly activity events, stream counts, and monthly retention tracked. Engaged cohort compared against both baseline and control group.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ── ACTIVITY RESULTS ── -->
+    <section>
+      <p class="section-label">Key Findings · Activity</p>
+      <h2 class="section-title">Activity Score — Pre vs Post Activation</h2>
+      <p class="section-body">Average weekly activity score by cohort. Engaged members improved from their own baseline; the control group showed minimal change.</p>
+
+      <div class="chart-panel" style="margin-top:1.25rem;">
+        <div class="chart-title">Weekly Activity Score (avg, out of 100)</div>
+        <div class="chart-subtitle">Engaged cohort n=214 · Control cohort n=186 · Synthetic data</div>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <div class="bar-row-label">Engaged · Pre-activation</div>
+            <div class="bar-track"><div class="bar-fill light" style="width:63%"></div></div>
+            <div class="bar-value">63</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-row-label">Engaged · Post-activation</div>
+            <div class="bar-track"><div class="bar-fill blue" style="width:77%"></div></div>
+            <div class="bar-value">77</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-row-label">Control · Pre-activation</div>
+            <div class="bar-track"><div class="bar-fill light" style="width:49%"></div></div>
+            <div class="bar-value">49</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-row-label">Control · Post-activation</div>
+            <div class="bar-track"><div class="bar-fill light" style="width:51%"></div></div>
+            <div class="bar-value">51</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#93c5fd"></div> Pre-activation baseline</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> Post-activation score</div>
+        </div>
+      </div>
+
+      <div class="bias-box">
+        <div class="bias-box-header">
+          <div class="bias-icon">!</div>
+          <div class="bias-box-title">Selection Bias — Documented Confound</div>
+        </div>
+        <p>Opt-in members entered the pilot with a baseline activity score of 63 vs 49 for the control group — a 14-point gap before the reward activated. Members who chose to participate were already more active.</p>
+        <p>The post-pilot improvement in the engaged cohort (+14 points) cannot be cleanly attributed to the reward. A randomised assignment design would be required to establish causal direction.</p>
+      </div>
+    </section>
+
+    <!-- ── BASELINE COMPARISON ── -->
+    <section>
+      <p class="section-label">Bias Controls</p>
+      <h2 class="section-title">Baseline Equivalence Test</h2>
+      <p class="section-body">Cohort characteristics at week 1 (before any reward exposure). A well-designed experiment would show comparable baselines. These results show they do not.</p>
+
+      <div class="baseline-grid">
+        <div class="baseline-card engaged">
+          <div class="baseline-card-label">Engaged Cohort (Opt-In)</div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Avg activity score</span>
+            <span class="baseline-metric-val">63.2</span>
+          </div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Weekly exercise events</span>
+            <span class="baseline-metric-val">4.1</span>
+          </div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Spotify streams / week</span>
+            <span class="baseline-metric-val">38</span>
+          </div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Prior 90-day retention</span>
+            <span class="baseline-metric-val">81%</span>
+          </div>
+        </div>
+        <div class="baseline-card control">
+          <div class="baseline-card-label">Control Cohort (Non-Opt-In)</div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Avg activity score</span>
+            <span class="baseline-metric-val">49.1</span>
+          </div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Weekly exercise events</span>
+            <span class="baseline-metric-val">2.6</span>
+          </div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Spotify streams / week</span>
+            <span class="baseline-metric-val">21</span>
+          </div>
+          <div class="baseline-metric">
+            <span class="baseline-metric-name">Prior 90-day retention</span>
+            <span class="baseline-metric-val">64%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ── RETENTION ── -->
+    <section>
+      <p class="section-label">Key Findings · Retention</p>
+      <h2 class="section-title">Cohort Retention at Week 8</h2>
+      <p class="section-body">Monthly retention tracked by engagement tier. The engaged cohort retained at a materially higher rate by the 8-week mark — though baseline differences mean this should be read as directional, not causal.</p>
+
+      <div class="chart-grid">
+        <div class="chart-panel">
+          <div class="chart-title">8-Week Retention Rate</div>
+          <div class="chart-subtitle">% of cohort still active</div>
+          <div class="bar-chart" style="margin-top:0.75rem;">
+            <div class="bar-row" style="grid-template-columns: 80px 1fr 44px;">
+              <div class="bar-row-label">Engaged</div>
+              <div class="bar-track"><div class="bar-fill blue" style="width:74%"></div></div>
+              <div class="bar-value">74%</div>
+            </div>
+            <div class="bar-row" style="grid-template-columns: 80px 1fr 44px;">
+              <div class="bar-row-label">Control</div>
+              <div class="bar-track"><div class="bar-fill light" style="width:52%"></div></div>
+              <div class="bar-value">52%</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <div class="chart-title">Spotify Streams — Pre vs Post</div>
+          <div class="chart-subtitle">Engaged cohort · avg weekly streams</div>
+          <div class="bar-chart" style="margin-top:0.75rem;">
+            <div class="bar-row" style="grid-template-columns: 80px 1fr 44px;">
+              <div class="bar-row-label">Pre (wk 1–4)</div>
+              <div class="bar-track"><div class="bar-fill light" style="width:38%"></div></div>
+              <div class="bar-value">38</div>
+            </div>
+            <div class="bar-row" style="grid-template-columns: 80px 1fr 44px;">
+              <div class="bar-row-label">Post (wk 5–12)</div>
+              <div class="bar-track"><div class="bar-fill blue" style="width:54%"></div></div>
+              <div class="bar-value">54</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ── DATA MODEL ── -->
+    <section>
+      <p class="section-label">Data Model</p>
+      <h2 class="section-title">Warehouse-Style Star Schema</h2>
+      <p class="section-body">Designed for Power BI with clearly separated dimension and fact layers. All tables are generated synthetically via the Python pipeline.</p>
+
       <div class="schema-grid">
         <div class="schema-group">
-          <h3>Dimensions</h3>
-          <ul>
-            <li>dim_member</li>
-            <li>dim_week</li>
-            <li>dim_month</li>
-            <li>dim_reward</li>
-            <li>dim_content_category</li>
-          </ul>
+          <div class="schema-group-label">Dimensions</div>
+          <span class="schema-tag">dim_member</span>
+          <span class="schema-tag">dim_week</span>
+          <span class="schema-tag">dim_month</span>
+          <span class="schema-tag">dim_reward</span>
+          <span class="schema-tag">dim_content_category</span>
         </div>
         <div class="schema-group">
-          <h3>Facts</h3>
-          <ul>
-            <li>fact_activity_weekly</li>
-            <li>fact_spotify_weekly</li>
-            <li>fact_campaign_exposure</li>
-            <li>fact_reward_events</li>
-            <li>fact_retention_monthly</li>
-          </ul>
+          <div class="schema-group-label">Facts</div>
+          <span class="schema-tag fact">fact_activity_weekly</span>
+          <span class="schema-tag fact">fact_spotify_weekly</span>
+          <span class="schema-tag fact">fact_campaign_exposure</span>
+          <span class="schema-tag fact">fact_reward_events</span>
+          <span class="schema-tag fact">fact_retention_monthly</span>
         </div>
       </div>
-      <p style="margin-top:1rem; font-size:0.9rem; color:#64748b;">
-        Analysis-ready outputs: <code style="background:#f1f5f9;padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;">member_week_pilot.csv</code> and <code style="background:#f1f5f9;padding:0.15rem 0.4rem;border-radius:4px;font-size:0.85rem;">member_summary.csv</code>
-      </p>
-    </div>
+      <div class="schema-outputs">
+        Analysis-ready outputs: <code>member_week_pilot.csv</code> and <code>member_summary.csv</code>
+      </div>
+    </section>
 
-    <!-- Section 4: Analytical Framework -->
-    <div class="card">
-      <h2>Analytical Framework</h2>
-      <p>Pilot design with an opt-in reward cohort measured against a non-engaged control group across four measurement dimensions.</p>
-      <ul class="questions">
-        <li><span class="q-dot"></span><strong>Engagement metrics:</strong>&nbsp; Spotify streams pre vs post activation</li>
-        <li><span class="q-dot"></span><strong>Activity metrics:</strong>&nbsp; Weekly exercise events and activity score deltas</li>
-        <li><span class="q-dot"></span><strong>Retention metrics:</strong>&nbsp; Monthly cohort retention by engagement tier</li>
-        <li><span class="q-dot"></span><strong>Bias controls:</strong>&nbsp; Opt-in selection bias flagged; baseline equivalence tested</li>
-      </ul>
-    </div>
+    <hr class="divider">
 
-    <!-- Section 5: Key Findings -->
-    <div class="card">
-      <h2>Key Findings</h2>
-      <div class="findings-grid">
-        <div class="finding-item">
-          <p>Reward-engaged members showed higher post-pilot activity scores relative to their own pre-pilot baseline.</p>
+    <!-- ── IMPLICATIONS ── -->
+    <section>
+      <p class="section-label">Product Implications</p>
+      <h2 class="section-title">What the Analysis Suggests</h2>
+
+      <div class="impl-grid">
+        <div class="impl-card">
+          <div class="impl-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="impl-card-title">Tier the reward structure</div>
+          <div class="impl-card-body">A single reward tier treats all members equally. Tiering by engagement level would sharpen impact and reduce cost-per-active-member for lower-engaged segments.</div>
         </div>
-        <div class="finding-item">
-          <p>Retention was notably higher in the engaged cohort at the 8-week mark compared to the control group.</p>
+        <div class="impl-card">
+          <div class="impl-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div class="impl-card-title">Retention lever, not activation lever</div>
+          <div class="impl-card-body">The reward performs best for members already engaged. Inactive segments require a different intervention — the music reward alone is unlikely to shift their behavioural baseline.</div>
         </div>
-        <div class="finding-item warning">
-          <p>Opt-in members were already more active at baseline — selection bias is a documented confounding factor.</p>
+        <div class="impl-card">
+          <div class="impl-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <div class="impl-card-title">Randomised design next cycle</div>
+          <div class="impl-card-body">Opt-in selection bias limits causal claims. Randomly assigning reward eligibility in a future pilot would allow attributable measurement rather than directional correlation.</div>
         </div>
-        <div class="finding-item">
-          <p>The reward performs best as a retention tool for already-engaged members, not as an activation lever for inactive segments.</p>
+        <div class="impl-card">
+          <div class="impl-card-icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="impl-card-title">Document limitations explicitly</div>
+          <div class="impl-card-body">Surfacing the bias risk in reporting — rather than presenting headline numbers without context — is what makes the analysis credible for product and partnerships decisions.</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Section 6: Product Implication -->
-    <div class="card">
-      <h2>Product Implication</h2>
-      <div class="implication-box">
-        <p>
-          A tiered reward structure targeting different engagement segments would sharpen impact and reduce
-          cost-per-active-member ratios.
-        </p>
-        <p>
-          Inactive segments require a different intervention — the music reward alone is unlikely to move
-          behavioural baselines for disengaged members.
-        </p>
-        <p>
-          A randomised controlled design in a future pilot would allow causal attribution rather than
-          directional correlation.
-        </p>
-      </div>
-    </div>
+    <hr class="divider">
 
-    <!-- Section 7: Stack -->
-    <div class="card">
-      <h2>Stack</h2>
-      <div class="stack-tags">
+    <!-- ── STACK ── -->
+    <section>
+      <p class="section-label">Stack</p>
+      <h2 class="section-title">Tools &amp; Libraries</h2>
+      <div class="stack-row">
         <span class="stack-tag">Python</span>
         <span class="stack-tag">pandas</span>
         <span class="stack-tag">numpy</span>
@@ -402,16 +997,18 @@
         <span class="stack-tag">Jupyter Notebooks</span>
         <span class="stack-tag">Power BI</span>
       </div>
-    </div>
+    </section>
 
   </main>
 
   <footer>
-    <div class="footer-links">
-      <a href="https://github.com/kabelo-analytics/vitality-spotify-rewards-analytics-case-study" target="_blank" rel="noopener">GitHub Repository</a>
-      <a href="https://km-webdvlpr.github.io/III.IV/projects/" target="_blank" rel="noopener">Portfolio</a>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/kabelo-analytics/vitality-spotify-rewards-analytics-case-study" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://km-webdvlpr.github.io/III.IV/projects/" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+      <span class="footer-copy">kabelo-analytics &middot; Vitality &times; Spotify Rewards</span>
     </div>
-    <p>Vitality &times; Spotify Rewards &mdash; Product Analytics Case Study &middot; kabelo-analytics</p>
   </footer>
 
 </body>
